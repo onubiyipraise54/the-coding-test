@@ -5,7 +5,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SubmissionsModule } from './submissions/submissions.module';
 import { InstitutionsModule } from './institutions/institutions.module';
-import { SubjectModule } from './subject/subject.module';
 
 @Module({
   imports: [
@@ -18,7 +17,6 @@ import { SubjectModule } from './subject/subject.module';
     }),
     SubmissionsModule,
     InstitutionsModule,
-    SubjectModule,
   ],
   controllers: [AppController],
   providers: [AppService],
