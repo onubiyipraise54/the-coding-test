@@ -31,3 +31,8 @@ export interface ISubmission extends Document {
   institution_income: number;
   subjects: ISubject[];
 }
+
+export interface IRankingQuery {
+  subject: string;
+  year: string;
+}

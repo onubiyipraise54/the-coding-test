@@ -1,3 +1,4 @@
+import { RankingQueryDto } from './dto/rank-by-subject.dto';
 import { QueryDto, IDPayloadDto } from './../misc.dto';
 import {
   Get,
@@ -37,6 +38,17 @@ export class SubmissionsController {
       throw new HttpException(result.message, HttpStatus.BAD_REQUEST);
     }
     return { ...result, count: result.data.length };
+  }
+
+  @Get('ranking-by-rating')
+  async rankingByRating(@Query() payload: RankingQueryDto) {
+    const result = await this.submissionsService.rankInstitutionBySubject(
+      payload,
+    );
+    if (!result.success) {
+      throw new HttpException(result.message, HttpStatus.BAD_REQUEST);
+    }
+    return result;
   }
 
   @Get(':id')
