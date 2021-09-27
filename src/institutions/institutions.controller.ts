@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { QueryDto, IDPayloadDto } from './../misc.dto';
+import {
+  Get,
+  Post,
+  Body,
+  Patch,
+  Query,
+  Param,
+  Delete,
+  HttpStatus,
+  Controller,
+  HttpException,
+} from '@nestjs/common';
 import { InstitutionsService } from './institutions.service';
 import { CreateInstitutionDto } from './dto/create-institution.dto';
 import { UpdateInstitutionDto } from './dto/update-institution.dto';
@@ -8,27 +20,55 @@ export class InstitutionsController {
   constructor(private readonly institutionsService: InstitutionsService) {}
 
   @Post()
-  create(@Body() createInstitutionDto: CreateInstitutionDto) {
-    return this.institutionsService.create(createInstitutionDto);
+  async create(@Body() createInstitutionDto: CreateInstitutionDto) {
+    const result = await this.institutionsService.create(createInstitutionDto);
+    if (!result.success) {
+      throw new HttpException(result.message, HttpStatus.BAD_REQUEST);
+    }
+    return result;
   }
 
   @Get()
-  findAll() {
-    return this.institutionsService.findAll();
+  async findAll(@Query() payload: QueryDto) {
+    const result = await this.institutionsService.find(
+      JSON.parse(payload.q || '{}'),
+    );
+    if (!result.success) {
+      throw new HttpException(result.message, HttpStatus.BAD_REQUEST);
+    }
+    return { ...result, count: result.data.length };
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.institutionsService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const result = await this.institutionsService.findOne(+id);
+    if (!result.success) {
+      throw new HttpException(result.message, HttpStatus.BAD_REQUEST);
+    }
+    return result;
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateInstitutionDto: UpdateInstitutionDto) {
-    return this.institutionsService.update(+id, updateInstitutionDto);
+  async update(
+    @Param() params: IDPayloadDto,
+    @Body() updateInstitutionDto: UpdateInstitutionDto,
+  ) {
+    const result = await this.institutionsService.update(
+      params.id,
+      updateInstitutionDto,
+    );
+    if (!result.success) {
+      throw new HttpException(result.message, HttpStatus.BAD_REQUEST);
+    }
+    return result;
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.institutionsService.remove(+id);
+  async remove(@Param() params: IDPayloadDto) {
+    const result = await this.institutionsService.remove(params.id);
+    if (!result.success) {
+      throw new HttpException(result.message, HttpStatus.BAD_REQUEST);
+    }
+    return result;
   }
 }

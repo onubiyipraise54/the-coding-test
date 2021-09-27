@@ -8,24 +8,6 @@ import {
   ValidateNested,
 } from 'class-validator';
 
-export class SubjectDto {
-  @IsNotEmpty()
-  @IsString()
-  name: string;
-
-  @IsNotEmpty()
-  @IsNumber()
-  academic_papers: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  students_total: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  student_rating: number;
-}
-
 export class CreateSubmissionDto {
   @IsNotEmpty()
   @IsNumber()
@@ -65,6 +47,6 @@ export class CreateSubmissionDto {
 
   @ValidateNested()
   @IsArray()
-  @Type(() => SubjectDto)
-  subjects: SubjectDto;
+  // @Type(() => string)
+  subjects: string[];
 }

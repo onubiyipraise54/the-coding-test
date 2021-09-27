@@ -1,7 +1,8 @@
-import { Institution } from './../../institutions/schemas/institution.schema';
 import { Document, Types, Schema as MongooseSchema } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Subject } from './subject.schema';
+
+import { Institution } from '../../institutions/schemas/institution.schema';
+import { Subject } from '../../subject/schemas/subject.schema';
 
 export type SubmissionDocument = Submission & Document;
 
@@ -38,8 +39,12 @@ export class Submission {
   @Prop({ type: MongooseSchema.Types.Decimal128, required: true })
   institution_income: Types.Decimal128;
 
-  @Prop({ required: true })
+  @Prop({
+    type: MongooseSchema.Types.ObjectId,
+    required: true,
+    ref: 'Subject',
+  })
   subjects: Subject[];
 }
 
-export const UserSchema = SchemaFactory.createForClass(Submission);
+export const SubmissionSchema = SchemaFactory.createForClass(Submission);
