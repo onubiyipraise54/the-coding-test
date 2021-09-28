@@ -1,7 +1,7 @@
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { GenericCrudService } from 'src/generic.crud.service';
+import { GenericCrudService } from '../generic.crud.service';
 import { IInstitution } from 'src/interfaces';
 import { CreateInstitutionDto } from './dto/create-institution.dto';
 import { UpdateInstitutionDto } from './dto/update-institution.dto';

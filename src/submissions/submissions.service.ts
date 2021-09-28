@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { GenericCrudService } from 'src/generic.crud.service';
+import { GenericCrudService } from '../generic.crud.service';
 import { IRankingQuery, ISubmission, ResponsePayload } from 'src/interfaces';
 import { CreateSubmissionDto } from './dto/create-submission.dto';
 import { UpdateSubmissionDto } from './dto/update-submission.dto';
